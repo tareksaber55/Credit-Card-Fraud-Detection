@@ -1,4 +1,5 @@
 📂 Project Structure
+
 ├── credit_fraud_utils_data.py   # Helper functions (data loading, report generation)
 
 ├── credit_fraud_utils_models.py # Model training utilities (Logistic, RandomForest, etc.)
@@ -14,6 +15,7 @@
 └── results/                     # Model reports & metrics
 
 ⚙️ Workflow
+
 1️⃣ Data Preparation (credit_fraud_utils_data.py)
 
 Load and preprocess CSV files.
