@@ -1,11 +1,18 @@
 📂 Project Structure
 ├── credit_fraud_utils_data.py   # Helper functions (data loading, report generation)
+
 ├── credit_fraud_utils_models.py # Model training utilities (Logistic, RandomForest, etc.)
+
 ├── credit_fraud_train.py        # Training script (build, train, save model)
+
 ├── credit_fraud_test.py         # Evaluation script on unseen test data
+
 ├── data/                        # CSV datasets (train, val, test)
+
 ├── models/                      # Saved models (.joblib)
+
 └── results/                     # Model reports & metrics
+
 ⚙️ Workflow
 1️⃣ Data Preparation (credit_fraud_utils_data.py)
 
