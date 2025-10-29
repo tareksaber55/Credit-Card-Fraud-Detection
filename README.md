@@ -99,8 +99,6 @@ Add more models (XGBoost, LightGBM).
 
 Perform hyperparameter tuning.
 
-Experiment with SMOTE or undersampling.
-
 Try anomaly detection or neural approaches.
 
 👤 Author
