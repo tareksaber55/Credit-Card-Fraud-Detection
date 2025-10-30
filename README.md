@@ -2,7 +2,7 @@
 
 ├── credit_fraud_utils_data.py   # Helper functions (data loading, report generation)
 
-├── credit_fraud_utils_models.py # Model training utilities (Logistic, RandomForest, etc.)
+├── credit_fraud_utils_models.py # Model training utilities (Logistic, RandomForest, Neural Network)
 
 ├── credit_fraud_train.py        # Training script (build, train, save model)
 
@@ -24,7 +24,7 @@ Create new feature Hour = Time // 3600 % 24.
 
 Split data into train/validation sets (stratified).
 
-Apply scaling (StandardScaler or NormalScaler).
+Apply scaling (StandardScaler / MinMaxScaler / RobustScaler).
 
 2️⃣ Model Training (credit_fraud_train.py)
 
@@ -33,6 +33,8 @@ Choose between:
 Logistic Regression
 
 Random Forest
+
+Neural Network
 
 Train using X_train, t_train.
 
@@ -70,7 +72,7 @@ Recall
 
 F1-Score
 
-ROC-AUC
+Average Precision
 
 The model reports the best threshold for fraud detection rather than using 0.5 blindly.
 
