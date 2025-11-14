@@ -14,16 +14,18 @@ def load_data(train_path,val_path,preproccesing = 0):
     df_train = pd.read_csv(train_path)
     df_val =  pd.read_csv(val_path)
 
-    X_train = df_train.drop(['Class'],axis=1)
+    # we cannot work with time as it is , we should convert it to Hours of day 
+    df_train['Hour'] = df_train['Time'] // 3600 % 24
+    df_val['Hour'] = df_val['Time'] // 3600 % 24
+
+    X_train = df_train.drop(['Time','Class'],axis=1)
     t_train = df_train['Class']
     
-    
-    X_val = df_val.drop(['Class'],axis=1)
+    X_val = df_val.drop(['Time','Class'],axis=1)
     t_val = df_val['Class']
 
-
     scaler = None
-    features = ["Time","Amount"]
+    features = ["Amount","Hour"]
     if(preproccesing == 1):
         scaler = ColumnTransformer(transformers=[('standard_scaler',StandardScaler(),features)],remainder='passthrough') 
     elif(preproccesing == 2):

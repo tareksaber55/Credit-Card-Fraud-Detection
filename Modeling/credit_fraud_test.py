@@ -4,9 +4,10 @@ from credit_fraud_utils_data import report
 
 def load_data(path, scaler):
     df_test = pd.read_csv(path)
+    df_test['Hour'] = df_test['Time'] // 3600 % 24
 
 
-    x_test = df_test.drop(columns=['Class'])
+    x_test = df_test.drop(columns=['Time','Class'])
     t_test = df_test['Class']
 
     if scaler is not None:
