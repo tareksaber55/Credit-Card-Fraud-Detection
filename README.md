@@ -2,13 +2,11 @@
 
 ├── credit_fraud_utils_data.py   # Helper functions (data loading, report generation)
 
-├── credit_fraud_utils_models.py # Model training utilities (Logistic, RandomForest, Neural Network)
-
 ├── credit_fraud_train.py        # Training script (build, train, save model)
 
 ├── credit_fraud_test.py         # Evaluation script on unseen test data
 
-├── data/                        # CSV datasets (train, val, test)
+├── data/                        # Link of data
 
 ├── models/                      # Saved models (.joblib)
 
@@ -27,6 +25,8 @@ Split data into train/validation sets (stratified).
 Apply scaling (StandardScaler / MinMaxScaler / RobustScaler).
 
 2️⃣ Model Training (credit_fraud_train.py)
+
+hyperparameter tuning using grid search
 
 Choose between:
 
@@ -66,10 +66,6 @@ Target: Class → 0 = Non-Fraud, 1 = Fraud.
 
 Evaluated using metrics suited for imbalanced datasets:
 
-Precision
-
-Recall
-
 F1-Score
 
 Average Precision
@@ -85,7 +81,8 @@ pip install -r requirements.txt
 
 2️⃣ Run training
 
-python credit_fraud_train.py
+python credit_fraud_train.py --model RandomForest  --scaler StandardScaler
+
 
 
 3️⃣ Run testing
@@ -100,10 +97,6 @@ Reports and confusion matrix printed in console or saved to results/.
 📌 Next Steps
 
 Add more models (XGBoost, LightGBM).
-
-Perform hyperparameter tuning.
-
-Try anomaly detection or neural approaches.
 
 👤 Author
 
