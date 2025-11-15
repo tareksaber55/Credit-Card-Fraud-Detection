@@ -25,10 +25,15 @@ This project follows a clean ML workflow:
 📂 Project Structure
 Credit-Card-Fraud-Detection/
 │
-├── Data/                    
+
+├── Data/ 
+
 │   ├── newtrain.csv
+
 │   ├── val.csv
+
 │   └── test.csv
+
 │
 ├── EDA/                      → Notebook for exploration  
 │
