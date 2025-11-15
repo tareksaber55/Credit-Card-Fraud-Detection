@@ -74,7 +74,7 @@ def del_outliers(df,cols):
 
 
 
-def f1_scores(model,x,t):
+def bestthreshold(model,x,t):
     t_prob = model.predict_proba(x)[:,1]
     precision,recall,threshold = precision_recall_curve(t,t_prob)
     precision = precision[:-1]

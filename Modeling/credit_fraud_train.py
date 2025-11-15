@@ -5,7 +5,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier,VotingClassifier
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.neural_network import MLPClassifier
-from sklearn.utils.class_weight import compute_class_weight
 from imblearn.pipeline import Pipeline as imbPipeline
 from sklearn.pipeline import Pipeline
 from credit_fraud_utils_data import *
@@ -13,7 +12,7 @@ import argparse
 import joblib
 
 
-def gridsearch(x_train,t_train,model,params,scaler,sampling,factor):
+def gridsearch(x_train,t_train,model,params,scaler,sampling,factor,grid):
     features = ["Amount","Hour"]
     if(scaler == 'StandardScaler'):
         scaler = ColumnTransformer(transformers=[('StandardScaler',StandardScaler(),features)],remainder='passthrough') 
@@ -41,21 +40,24 @@ def gridsearch(x_train,t_train,model,params,scaler,sampling,factor):
         pipe = imbPipeline([('sampler',sampler),('model',model)])
     else:
         pipe = Pipeline([('model',model)])
-
-    print(f'running grid with scaler {scaler} and sampler {sampler}')
-    cv = StratifiedKFold(n_splits=2,random_state=42,shuffle=True)
-    grid = GridSearchCV(
-        estimator=pipe,
-        param_grid=params,
-        cv=cv,
-        scoring='f1',
-        n_jobs=-1,
-        verbose=1
-    )
-    grid.fit(x_train,t_train)
-    print(f'best params are {grid.best_params_}')
-    print(f'best f1 score is {grid.best_score_}')
-    return grid.best_estimator_,grid.best_params_
+    if(grid):
+        print(f'running grid with scaler {scaler} and sampler {sampler}')
+        cv = StratifiedKFold(n_splits=3,random_state=42,shuffle=True)
+        grid = GridSearchCV(
+            estimator=pipe,
+            param_grid=params,
+            cv=cv,
+            scoring='f1',
+            n_jobs=-1,
+            verbose=1,
+        )
+        grid.fit(x_train,t_train)
+        print(f'best params are {grid.best_params_}')
+        print(f'best f1 score is {grid.best_score_}')
+        return grid.best_estimator_
+    else:
+        pipe.fit(x_train,t_train)
+        return pipe
 
 if __name__ == '__main__':
     # Arg Parser
@@ -75,25 +77,30 @@ if __name__ == '__main__':
                         help="Path to training CSV file.")
     parser.add_argument("--val", type=str, default=r"data\val.csv",
                         help="Path to val CSV file.")
+    parser.add_argument("--gridsearch",action='store_true' ,
+                        help="use grid search")
     args = parser.parse_args()
     
     # load data
     x_train,x_val,t_train,t_val = load_data(args.train,args.val)
     # define the model and params
     if(args.model == 'LogisticRegression'):
-        model = LogisticRegression()
-        params = {'model__alpha':[0.01,0.1,1,10]}
-    elif(args.model == 'RandomForest'):
-        model = RandomForestClassifier()
-        params = {'model__n_estimators':[20,25,30,35,40,45,50],
-                  'model__max_depth':[3,5,7,9]}
+        model = LogisticRegression(random_state=42)
+        params = {'model__C':[0.01,0.1,1],
+                  'model__penalty':['l1','l2'],
+                  'model__class_weight':['balanced',None]}
+    elif(args.model == 'RandomForest'):      
+        model = RandomForestClassifier(random_state=42,max_depth=10,n_estimators=45)        
+        params = {'model__n_estimators':[20,30,40,45,50],
+                  'model__max_depth':[5,7,9,10],
+                  'model__class_weight':['balanced',None]}
     elif(args.model == 'NeuralNetwork'):
-        model = MLPClassifier()
-        params = {'model__hidden_layer_sizes':[(64,32,16,8),(16,8)]}
+        model = MLPClassifier(random_state=42,hidden_layer_sizes=(16,8))
+        params = {'model__hidden_layer_sizes':[(64,32,16,8),(32,16,8),(16,8)]}
     else:
-        lr = LogisticRegression(random_state=42, max_iter=500)
-        rf = RandomForestClassifier(random_state=42)
-        nn = MLPClassifier(random_state=42, max_iter=500)
+        lr = LogisticRegression(random_state=42)
+        rf = RandomForestClassifier(random_state=42,max_depth=10,n_estimators=45)
+        nn = MLPClassifier(random_state=42,hidden_layer_sizes=(16,8))
         model = VotingClassifier(estimators=[('lr', lr), ('rf', rf), ('nn', nn)], voting='soft')
         params = {
             'model__lr__C': [0.1, 1],
@@ -102,11 +109,11 @@ if __name__ == '__main__':
         }
 
     # training and validation
-    best_model , best_params = gridsearch(x_train,t_train,model,
+    best_model = gridsearch(x_train,t_train,model,
                                           params,args.scaler,args.sampler,
-                                          args.factor)
+                                          args.factor,args.gridsearch)
     eval(best_model,x_val,t_val)
-    best_threshold = f1_scores(best_model,x_val,t_val)
+    best_threshold = bestthreshold(best_model,x_val,t_val)
     report(best_model,x_val,t_val,best_threshold)
     model_dictionary = {
         'model' : best_model,
