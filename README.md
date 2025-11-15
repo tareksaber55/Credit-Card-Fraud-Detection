@@ -25,21 +25,20 @@ This project follows a clean ML workflow:
 📂 Project Structure
 Credit-Card-Fraud-Detection/
 │
-
 ├── Data/ 
-
 │   ├── newtrain.csv
-
+│
 │   ├── val.csv
-
+│
 │   └── test.csv
-
 │
 ├── EDA/                      → Notebook for exploration  
 │
 ├── Modeling/                 →Python scripts for training and testing
-│   ├──credit_fraud_train.py       
+│   ├──credit_fraud_train.py
+│
 │   ├──credit_fraud_test.py
+│
 |   ├──credit_fraud_utils_data.py
 |
 ├── requirements.txt          → Python dependencies  
