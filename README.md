@@ -83,19 +83,14 @@ source venv/bin/activate
 venv\Scripts\activate
 
 2️⃣ Install dependencies
+
 pip install -r requirements.txt
 
 
 🚀 How to Run Training
-Basic Model 
-python credit_fraud_train.py
+Our Final Model 
+python credit_fraud_train.py --model RandomForest --scaler StandardScaler --train Data/newtrain.csv --val Data/val.csv
 
-With options
-python credit_fraud_train.py \
-    --model RandomForest \
-    --scaler StandardScaler \
-    --train Data/newtrain.csv \
-    --val Data/val.csv \
 
 You can also use other arguments to hyperparamater tuning
 
@@ -103,7 +98,7 @@ You can also use other arguments to hyperparamater tuning
 | Argument       | Description                                                          |
 | -------------- | -------------------------------------------------------------------- |
 | `--model`      | LogisticRegression / RandomForest / NeuralNetwork / VotingClassifier |
-| `--scaler`     | StandardScaler / MinMaxScaler / RobustScaler                         |
+| `--scaler`     | StandardScaler / MinMaxScaler / RobustScaler / None                  |
 | `--train`      | Path to training CSV                                                 |
 | `--val`        | Path to validation CSV                                               |
 | `--gridsearch` | Enable GridSearchCV                                                  |
