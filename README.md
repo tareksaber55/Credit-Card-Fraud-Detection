@@ -27,9 +27,9 @@ This project follows a clean and modular ML workflow:
 Credit-Card-Fraud-Detection/
 │
 ├── Data/
-│   ├── newtrain.csv
-│   ├── val.csv
-│   └── test.csv
+   ├── newtrain.csv
+   ├── val.csv
+   └── test.csv
 │
 ├── EDA/                     → Notebooks for exploratory analysis
 │
