@@ -60,10 +60,10 @@ Class → 0 = normal, 1 = fraud
 1️⃣ Create a virtual environment
 python -m venv venv
 
-# Mac/Linux
+ Mac/Linux
 source venv/bin/activate
 
-# Windows
+ Windows
 venv\Scripts\activate
 
 2️⃣ Install dependencies
