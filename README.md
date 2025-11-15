@@ -1,106 +1,160 @@
+📘 Credit Card Fraud Detection
+
+Machine-learning pipeline for detecting fraudulent transactions in highly imbalanced credit-card datasets.
+This project includes EDA, preprocessing, sampling techniques, model training, hyperparameter search, and performance evaluation using best practices for imbalanced classification.
+
+📌 Project Overview
+
+Credit-card fraud detection is a binary classification problem with extremely imbalanced classes.
+This project follows a clean ML workflow:
+
+✔ Exploratory Data Analysis (EDA)
+
+✔ Data preprocessing (scaling, imputation, feature engineering)
+
+✔ Handling imbalance (SMOTE / SMOTEENN / RandomUnderSampler /class weighting)
+
+✔ Modeling (Logistic Regression, Random Forest, Neural Network, Voting Classifier)
+
+✔ Grid Search with cross-validation
+
+✔ Saving final models and metrics
+
+✔ Configurable training using command-line arguments
+
 📂 Project Structure
+Credit-Card-Fraud-Detection/
+│
+├── Data/                    
+│   ├── newtrain.csv
+│   ├── val.csv
+│   └── test.csv
+│
+├── EDA/                      → Notebook for exploration  
+│
+├── Modeling/                 →Python scripts for training and testing
+│   ├──credit_fraud_train.py       
+│   ├──credit_fraud_test.py
+|   ├──credit_fraud_utils_data.py
+|
+├── requirements.txt          → Python dependencies  
+├── README.md                 → You are here  
+└── results.docx              → Model results summary
 
-├── credit_fraud_utils_data.py   # Helper functions (data loading, report generation)
+📥 Dataset
 
-├── credit_fraud_train.py        # Training script (build, train, save model)
+This project works with the popular Credit Card Fraud Detection dataset (284,807 transactions).
 
-├── credit_fraud_test.py         # Evaluation script on unseen test data
+📌 Dataset Source: Search “Credit Card Fraud Detection dataset (2013)”.
 
-├── data/                        # Link of data
+schema includes:
 
-├── models/                      # Saved models (.joblib)
+Time, Amount, and 28 PCA-transformed features (V1–V28)
 
-└── results/                     # Model reports & metrics
+Class → 0 = normal, 1 = fraud
 
-⚙️ Workflow
+Place the dataset here:
 
-1️⃣ Data Preparation (credit_fraud_utils_data.py)
+Data/creditcard.csv
 
-Load and preprocess CSV files.
+🛠 Installation
+1. Create a Python environment
+python -m venv venv
+source venv/bin/activate   # Mac/Linux
+venv\Scripts\activate      # Windows
 
-Create new feature Hour = Time // 3600 % 24.
-
-Split data into train/validation sets (stratified).
-
-Apply scaling (StandardScaler / MinMaxScaler / RobustScaler).
-
-2️⃣ Model Training (credit_fraud_train.py)
-
-hyperparameter tuning using grid search
-
-Choose between:
-
-Logistic Regression
-
-Random Forest
-
-Neural Network
-
-Train using X_train, t_train.
-
-Compute the best threshold maximizing F1-score.
-
-Save model, scaler, and threshold with joblib.
-
-3️⃣ Evaluation (credit_fraud_test.py)
-
-Load saved model/scaler.
-
-Apply same preprocessing on test data.
-
-Predict fraud probabilities.
-
-Generate a classification report, confusion matrix, and F1 score.
-
-🧮 Features Used
-
-Time-based: Hour (derived from transaction time).
-
-V1–V28: PCA-transformed anonymized features.
-
-Amount: Transaction amount.
-
-Target: Class → 0 = Non-Fraud, 1 = Fraud.
-
-📊 Metrics
-
-Evaluated using metrics suited for imbalanced datasets:
-
-F1-Score
-
-Average Precision
-
-The model reports the best threshold for fraud detection rather than using 0.5 blindly.
-
-🚀 How to Run
-
-1️⃣ Install dependencies
-
+2. Install dependencies
 pip install -r requirements.txt
 
 
-2️⃣ Run training
-
+🚀 How to Run Training
+Basic training (example)
 python credit_fraud_train.py --model RandomForest  --scaler StandardScaler
 
+With options
+python train.py \
+    --model RandomForest \
+    --scaler StandardScaler \
+    --train Data/newtrain.csv \
+    --val Data/val.csv \
 
 
-3️⃣ Run testing
+Arguments supported
+Argument	Description
+--model	LogisticRegression / RandomForest / NeuralNetwork / VotingClassifier
+--scaler	StandardScaler / MinMaxScaler / RobustScaler
+--train	Path to training CSV
+--val	Path to validation CSV
+--gridsearch	Enable GridSearchCV
+--sampling	Enable SMOTE / SMOTEENN / UnderSampler / None
+--factor	Sampling factor
+📊 Evaluation Metrics
 
-python credit_fraud_test.py
+Because the dataset is highly imbalanced, accuracy is misleading.
+This project uses robust metrics:
+
+F1-score
+
+Average Precision (AP)
+
+Confusion matrix
+
+Metrics per fold during Stratified K-Fold cross-validation
+
+🧠 Machine Learning Models
+
+This project supports several models:
+
+🔹 Logistic Regression
+
+Useful baseline
+
+Supports class weighting
+
+🔹 Random Forest
+
+Strong performance on tabular fraud data
+
+Handles non-linear relationships
+
+Supports class_weight='balanced'
+
+🔹 Neural Network (MLP)
+
+Multi-layer perception using sklearn
+
+Tunable via grid search
+
+🔹 Voting Classifier
+
+Combines predictions from multiple models
+
+Supports soft voting
+
+⚖ Handling Imbalanced Data
+
+The project provides multiple strategies:
+
+SMOTE
+
+SMOTEENN (SMOTE + Edited Nearest Neighbors)
+
+RandomUnderSampler
+
+Class-weighting
 
 
-4️⃣ View results
+Sampling is safely applied inside CV folds only to avoid data leakage.
 
-Reports and confusion matrix printed in console or saved to results/.
+📁 Output Files
 
-📌 Next Steps
+After training, the project outputs:
 
-Add more models (XGBoost, LightGBM).
+artifacts/
+│
+├── model.joblib            → Serialized trained model  
 
-👤 Author
 
-Tarek Saber
+🧩 Future Improvements
 
-📎 GitHub Profile[https://github.com/tareksaber55]
-
+Build a FastAPI inference service
