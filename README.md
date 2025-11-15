@@ -34,16 +34,26 @@ Credit-Card-Fraud-Detection/
 │   ├── val.csv
 
 │   └── test.csv
+
 │
+
 ├── EDA/                     → Notebooks for exploratory analysis
+
 │
+
 ├── Modeling/                → Python scripts for training & testing
+
 │   ├── credit_fraud_train.py
+
 │   ├── credit_fraud_test.py
+
 │   └── credit_fraud_utils_data.py
+
 │
 ├── requirements.txt         → Python dependencies
+
 ├── README.md                → You are here
+
 └── results.docx             → Model results summary
 
 
