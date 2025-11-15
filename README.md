@@ -1,20 +1,20 @@
 📘 Credit Card Fraud Detection
 
-Machine-learning pipeline for detecting fraudulent transactions in highly imbalanced credit-card datasets.
-This project includes EDA, preprocessing, sampling techniques, model training, hyperparameter search, and performance evaluation using best practices for imbalanced classification.
+A full machine-learning pipeline for detecting fraudulent transactions in highly imbalanced credit-card datasets.
+This project includes EDA, preprocessing, sampling techniques, model training, hyperparameter tuning, and performance evaluation using best practices for imbalanced classification.
 
 📌 Project Overview
 
-Credit-card fraud detection is a binary classification problem with extremely imbalanced classes.
-This project follows a clean ML workflow:
+Credit-card fraud detection is a binary classification task where fraud cases are extremely rare.
+This project follows a clean and modular ML workflow:
 
 ✔ Exploratory Data Analysis (EDA)
 
 ✔ Data preprocessing (scaling, imputation, feature engineering)
 
-✔ Handling imbalance (SMOTE / SMOTEENN / RandomUnderSampler /class weighting)
+✔ Handling imbalance (SMOTE, SMOTEENN, RandomUnderSampler, class weighting)
 
-✔ Modeling (Logistic Regression, Random Forest, Neural Network, Voting Classifier)
+✔ Modeling (Logistic Regression, Random Forest, MLP Neural Network, Voting Classifier)
 
 ✔ Grid Search with cross-validation
 
@@ -23,33 +23,30 @@ This project follows a clean ML workflow:
 ✔ Configurable training using command-line arguments
 
 📂 Project Structure
+
 Credit-Card-Fraud-Detection/
 │
-├── Data/ 
+├── Data/
 │   ├── newtrain.csv
-│
 │   ├── val.csv
-│
 │   └── test.csv
 │
-├── EDA/                      → Notebook for exploration  
+├── EDA/                     → Notebooks for exploratory analysis
 │
-├── Modeling/                 →Python scripts for training and testing
-│   ├──credit_fraud_train.py
+├── Modeling/                → Python scripts for training & testing
+│   ├── credit_fraud_train.py
+│   ├── credit_fraud_test.py
+│   └── credit_fraud_utils_data.py
 │
-│   ├──credit_fraud_test.py
-│
-|   ├──credit_fraud_utils_data.py
-|
-├── requirements.txt          → Python dependencies  
-├── README.md                 → You are here  
-└── results.docx              → Model results summary
+├── requirements.txt         → Python dependencies
+├── README.md                → You are here
+└── results.docx             → Model results summary
+
 
 📥 Dataset
 
-This project works with the popular Credit Card Fraud Detection dataset (284,807 transactions).
-
-📌 Dataset Source: Search “Credit Card Fraud Detection dataset (2013)”.
+This project works with the popular Credit Card Fraud Detection dataset (2013)
+containing 284,807 transactions with PCA-transformed features.
 
 schema includes:
 
@@ -57,106 +54,107 @@ Time, Amount, and 28 PCA-transformed features (V1–V28)
 
 Class → 0 = normal, 1 = fraud
 
-Place the dataset here:
 
-Data/creditcard.csv
 
 🛠 Installation
-1. Create a Python environment
+1️⃣ Create a virtual environment
 python -m venv venv
-source venv/bin/activate   # Mac/Linux
-venv\Scripts\activate      # Windows
 
-2. Install dependencies
+# Mac/Linux
+source venv/bin/activate
+
+# Windows
+venv\Scripts\activate
+
+2️⃣ Install dependencies
 pip install -r requirements.txt
 
 
 🚀 How to Run Training
 Basic training (example)
-python credit_fraud_train.py --model RandomForest  --scaler StandardScaler
+python credit_fraud_train.py
+
 
 With options
-python train.py \
+python credit_fraud_train.py \
     --model RandomForest \
     --scaler StandardScaler \
     --train Data/newtrain.csv \
     --val Data/val.csv \
 
 
-Arguments supported
-Argument	Description
---model	LogisticRegression / RandomForest / NeuralNetwork / VotingClassifier
---scaler	StandardScaler / MinMaxScaler / RobustScaler
---train	Path to training CSV
---val	Path to validation CSV
---gridsearch	Enable GridSearchCV
---sampling	Enable SMOTE / SMOTEENN / UnderSampler / None
---factor	Sampling factor
+⚙️ Command-Line Arguments
+| Argument       | Description                                                          |
+| -------------- | -------------------------------------------------------------------- |
+| `--model`      | LogisticRegression / RandomForest / NeuralNetwork / VotingClassifier |
+| `--scaler`     | StandardScaler / MinMaxScaler / RobustScaler                         |
+| `--train`      | Path to training CSV                                                 |
+| `--val`        | Path to validation CSV                                               |
+| `--gridsearch` | Enable GridSearchCV                                                  |
+| `--sampling`   | SMOTE / SMOTEENN / UnderSampler / None                               |
+| `--factor`     | Sampling factor for SMOTE                                            |
+
 📊 Evaluation Metrics
 
-Because the dataset is highly imbalanced, accuracy is misleading.
-This project uses robust metrics:
+Given the severe class imbalance, accuracy is misleading.
+Instead, the project uses robust metrics:
 
 F1-score
 
 Average Precision (AP)
 
-Confusion matrix
+Confusion Matrix
 
-Metrics per fold during Stratified K-Fold cross-validation
+Cross-validated metrics using Stratified K-Fold
+
 
 🧠 Machine Learning Models
 
-This project supports several models:
-
 🔹 Logistic Regression
 
-Useful baseline
-
-Supports class weighting
-
-🔹 Random Forest
-
-Strong performance on tabular fraud data
-
-Handles non-linear relationships
+Strong baseline
 
 Supports class_weight='balanced'
 
+🔹 Random Forest
+
+Great for tabular, imbalanced data
+
+Handles non-linear relationships
+
 🔹 Neural Network (MLP)
 
-Multi-layer perception using sklearn
+Multi-layer perceptron (sklearn)
 
-Tunable via grid search
+Tunable through Grid Search
 
 🔹 Voting Classifier
 
-Combines predictions from multiple models
+Combines multiple models
 
 Supports soft voting
 
-⚖ Handling Imbalanced Data
 
-The project provides multiple strategies:
+⚖ Handling Class Imbalance
+
+Techniques supported:
 
 SMOTE
 
-SMOTEENN (SMOTE + Edited Nearest Neighbors)
+SMOTEENN (SMOTE + ENN cleaning)
 
-RandomUnderSampler
+Random Under-Sampling
 
-Class-weighting
+Class weighting (model-based)
+
+👉 Sampling is applied inside CV folds only to avoid data leakage.
 
 
-Sampling is safely applied inside CV folds only to avoid data leakage.
 
 📁 Output Files
 
 After training, the project outputs:
-
-artifacts/
-│
-├── model.joblib            → Serialized trained model  
+model.joblib            → Serialized trained model and best threshold  
 
 
 🧩 Future Improvements
