@@ -29,11 +29,11 @@ Credit-Card-Fraud-Detection/
 
 ├── Data/
 
-│   ├── newtrain.csv
+│    ├── newtrain.csv
 
-│   ├── val.csv
+│    ├── val.csv
 
-│   └── test.csv
+│    └── test.csv
 
 │
 
@@ -43,11 +43,11 @@ Credit-Card-Fraud-Detection/
 
 ├── Modeling/                → Python scripts for training & testing
 
-│   ├── credit_fraud_train.py
+│    ├── credit_fraud_train.py
 
-│   ├── credit_fraud_test.py
+│    ├── credit_fraud_test.py
 
-│   └── credit_fraud_utils_data.py
+│    └── credit_fraud_utils_data.py
 
 │
 ├── requirements.txt         → Python dependencies
