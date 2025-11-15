@@ -72,6 +72,7 @@ Class → 0 = normal, 1 = fraud
 
 
 🛠 Installation
+
 1️⃣ Create a virtual environment
 python -m venv venv
 
@@ -86,9 +87,8 @@ pip install -r requirements.txt
 
 
 🚀 How to Run Training
-Basic training (example)
+Basic Model 
 python credit_fraud_train.py
-
 
 With options
 python credit_fraud_train.py \
@@ -97,6 +97,7 @@ python credit_fraud_train.py \
     --train Data/newtrain.csv \
     --val Data/val.csv \
 
+You can also use other arguments to hyperparamater tuning
 
 ⚙️ Command-Line Arguments
 | Argument       | Description                                                          |
