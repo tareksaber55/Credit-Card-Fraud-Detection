@@ -71,6 +71,7 @@ Class → 0 = normal, 1 = fraud
 
 
 
+
 🛠 Installation
 
 1️⃣ Create a virtual environment
@@ -97,7 +98,7 @@ Our Final Model
 python credit_fraud_train.py --model RandomForest --scaler StandardScaler --train Data/newtrain.csv --val Data/val.csv
 
 
-You can also use other arguments to hyperparamater tuning
+You can also try other arguments
 
 ⚙️ Command-Line Arguments
 | Argument       | Description                                                          |
@@ -109,6 +110,7 @@ You can also use other arguments to hyperparamater tuning
 | `--gridsearch` | Enable GridSearchCV                                                  |
 | `--sampling`   | SMOTE / SMOTEENN / UnderSampler / None                               |
 | `--factor`     | Sampling factor for SMOTE                                            |
+
 
 
 📊 Evaluation Metrics
@@ -123,6 +125,7 @@ Average Precision (AP)
 Confusion Matrix
 
 Cross-validated metrics using Stratified K-Fold
+
 
 
 🧠 Machine Learning Models
@@ -150,6 +153,7 @@ Tunable through Grid Search
 Combines multiple models
 
 Supports soft voting
+
 
 
 ⚖ Handling Class Imbalance
