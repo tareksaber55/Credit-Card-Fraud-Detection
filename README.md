@@ -29,12 +29,11 @@ Credit-Card-Fraud-Detection/
 
 ├── Data/
 
-   ├── newtrain.csv
-   
-   ├── val.csv
-   
-   └── test.csv
-   
+│   ├── newtrain.csv
+
+│   ├── val.csv
+
+│   └── test.csv
 │
 ├── EDA/                     → Notebooks for exploratory analysis
 │
@@ -46,6 +45,7 @@ Credit-Card-Fraud-Detection/
 ├── requirements.txt         → Python dependencies
 ├── README.md                → You are here
 └── results.docx             → Model results summary
+
 
 
 📥 Dataset
