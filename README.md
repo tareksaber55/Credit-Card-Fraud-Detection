@@ -74,12 +74,15 @@ Class → 0 = normal, 1 = fraud
 🛠 Installation
 
 1️⃣ Create a virtual environment
+
 python -m venv venv
 
  Mac/Linux
+ 
 source venv/bin/activate
 
  Windows
+ 
 venv\Scripts\activate
 
 2️⃣ Install dependencies
@@ -88,7 +91,9 @@ pip install -r requirements.txt
 
 
 🚀 How to Run Training
+
 Our Final Model 
+
 python credit_fraud_train.py --model RandomForest --scaler StandardScaler --train Data/newtrain.csv --val Data/val.csv
 
 
@@ -104,6 +109,7 @@ You can also use other arguments to hyperparamater tuning
 | `--gridsearch` | Enable GridSearchCV                                                  |
 | `--sampling`   | SMOTE / SMOTEENN / UnderSampler / None                               |
 | `--factor`     | Sampling factor for SMOTE                                            |
+
 
 📊 Evaluation Metrics
 
@@ -165,7 +171,7 @@ Class weighting (model-based)
 📁 Output Files
 
 After training, the project outputs:
-model.joblib            → Serialized trained model and best threshold  
+model.joblib            →trained model and best threshold  
 
 
 🧩 Future Improvements
