@@ -1,3 +1,4 @@
+<pre>
 📘 Credit Card Fraud Detection
 
 A full machine-learning pipeline for detecting fraudulent transactions in highly imbalanced credit-card datasets.
@@ -181,3 +182,4 @@ model.joblib            →trained model and best threshold
 🧩 Future Improvements
 
 Build a FastAPI inference service
+ </pre>
