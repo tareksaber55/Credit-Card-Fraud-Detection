@@ -37,19 +37,19 @@ Credit-Card-Fraud-Detection/
 │    └── test.csv # for testing purpose
 │
 
-├── EDA/                     → notebook for exploratory data analysis & visualization
+├── EDA.ipynb                   # notebook for exploratory data analysis & visualization
 
 │
 
-├── Modeling/                → Python scripts for training & testing
-
-│    ├── credit_fraud_train.py  # main script to run full training pipeline
-
-│    ├── credit_fraud_utils_data.py # script for the training utilities
-
-│    └── credit_fraud_test.py # script to run inference / evaluation on test set
-
 │
+
+├── credit_fraud_train.py  # main script to run full training pipeline
+
+├── credit_fraud_utils_data.py # script for the training utilities
+
+├── credit_fraud_test.py # script to run inference / evaluation on test set
+
+
 ├── requirements.txt         → Python dependencies
 
 ├── README.MD                → You are here
