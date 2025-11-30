@@ -47,7 +47,7 @@ def gridsearch(x_train,t_train,model,params,scaler,sampling,factor,grid):
             estimator=pipe,
             param_grid=params,
             cv=cv,
-            scoring='f1',
+            scoring='average_precision',
             n_jobs=-1,
             verbose=1,
         )
@@ -79,10 +79,18 @@ if __name__ == '__main__':
                         help="Path to val CSV file.")
     parser.add_argument("--gridsearch",action='store_true' ,
                         help="use grid search")
+    parser.add_argument('--outliers_features',type=str,nargs='+',
+                        help=(
+        "List of feature names on which outliers should be removed. "
+        "If omitted, no outlier removal is performed."
+    ))
+    parser.add_argument('--outliers_factor',type=float,default=1.5,
+                        help='when factor increase the number of deleted outliers decrease and vice versa')
+    
     args = parser.parse_args()
     
     # load data
-    x_train,x_val,t_train,t_val = load_data(args.train,args.val)
+    x_train,x_val,t_train,t_val = load_data(args.train,args.val,args)
     # define the model and params
     if(args.model == 'LogisticRegression'):
         model = LogisticRegression(random_state=42)
@@ -91,17 +99,17 @@ if __name__ == '__main__':
                   'model__class_weight':['balanced',None]}
     elif(args.model == 'RandomForest'):      
         model = RandomForestClassifier(random_state=42,max_depth=10,n_estimators=45)        
-        params = {'model__n_estimators':[20,30,40,45,50],
-                  'model__max_depth':[5,7,9,10],
+        params = {'model__n_estimators':[40,45,50,60,70,80],
+                  'model__max_depth':[9,10,11,12],
                   'model__class_weight':['balanced',None]}
     elif(args.model == 'NeuralNetwork'):
         model = MLPClassifier(random_state=42,hidden_layer_sizes=(16,8))
         params = {'model__hidden_layer_sizes':[(64,32,16,8),(32,16,8),(16,8)]}
     else:
-        lr = LogisticRegression(random_state=42)
+        lr = LogisticRegression(random_state=42,C=1,penalty='l2')
         rf = RandomForestClassifier(random_state=42,max_depth=10,n_estimators=45)
         nn = MLPClassifier(random_state=42,hidden_layer_sizes=(16,8))
-        model = VotingClassifier(estimators=[('lr', lr), ('rf', rf), ('nn', nn)], voting='soft')
+        model = VotingClassifier(estimators=[('lr', lr), ('rf', rf), ('nn', nn)], voting='soft',weights=[0.5,2.5,1])
         params = {
             'model__lr__C': [0.1, 1],
             'model__rf__n_estimators': [25,30,50],
