@@ -30,32 +30,31 @@ Credit-Card-Fraud-Detection/
 
 ├── Data/
 
-│    ├── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
+│    ├── newtrain.csv # for training purpose
 
-│    ├── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
+│    ├── val.csv # for validation purpose
 
-│    └── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
-
+│    └── test.csv # for testing purpose
 │
 
-├── EDA/                     → Notebooks for exploratory analysis
+├── EDA/                     → notebook for exploratory data analysis & visualization
 
 │
 
 ├── Modeling/                → Python scripts for training & testing
 
-│    ├── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
+│    ├── credit_fraud_train.py  # main script to run full training pipeline
 
-│    ├── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
+│    ├── credit_fraud_utils_data.py # script for the training utilities
 
-│    └── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
+│    └── credit_fraud_test.py # script to run inference / evaluation on test set
 
 │
-├── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip         → Python dependencies
+├── requirements.txt         → Python dependencies
 
-├── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip                → You are here
+├── README.MD                → You are here
 
-└── https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip             → Model results summary
+└── Results/             → Model results summary
 
 
 
@@ -96,7 +95,7 @@ pip install -r https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-
 
 Our Final Model 
 
-python https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip --model RandomForest --scaler StandardScaler --train https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip --val https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
+python credit_fraud_train.py --model RandomForest --scaler StandardScaler --train 'data\newtrain.csv' --val 'data\val.csv'
 
 
 You can also try other arguments
@@ -111,6 +110,8 @@ You can also try other arguments
 | `--gridsearch` | Enable GridSearchCV                                                  |
 | `--sampling`   | SMOTE / SMOTEENN / UnderSampler / None                               |
 | `--factor`     | Sampling factor for SMOTE                                            |
+| `--outliers_features`| "List of feature names on which outliers should be removed. "  |
+| `--outliers_factor`| "when factor increase the number of deleted outliers decrease and vice versa"|
 
 
 
