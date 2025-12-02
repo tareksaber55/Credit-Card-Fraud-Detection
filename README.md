@@ -211,9 +211,6 @@ Scaler (.pkl)
 
 Best threshold
 
-Download the full packaged output:
-
-🔗 https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
 
 🧩 Future Improvements
 
