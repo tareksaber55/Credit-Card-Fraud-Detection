@@ -44,6 +44,7 @@ Saving trained models & metrics
 Configurable training via command-line arguments
 
 ## 📂 Project Structure
+<pre>
 Credit-Card-Fraud-Detection/
 │
 ├── Data/
@@ -61,7 +62,7 @@ Credit-Card-Fraud-Detection/
 ├── requirements.txt
 ├── README.md
 └── Results/                      # model summary & best model outputs
-
+</pre>
 ## 📥 Dataset
 
 This project uses the Credit Card Fraud Detection Dataset (2013) containing:
@@ -87,8 +88,9 @@ Class = 1 → fraud
 The PCA transformation preserves confidentiality while keeping predictive signal.
 
 ## Results
-
-  
+F1-Score: 0.8317
+average_precision: 0.8406882510305027
+On Test Set  
 ## 🛠 Installation
   
 1️⃣ Create a virtual environment
