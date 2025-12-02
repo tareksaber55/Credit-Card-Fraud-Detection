@@ -89,7 +89,9 @@ The PCA transformation preserves confidentiality while keeping predictive signal
 
 ## Results
 F1-Score: 0.8317
+
 average_precision: 0.8406882510305027
+
 On Test Set  
 ## 🛠 Installation
   
@@ -110,9 +112,6 @@ venv\Scripts\activate
 pip install -r requirements.txt
 
 
-Or install directly from GitHub zipped requirements:
-
-pip install -r https://raw.githubusercontent.com/tareksaber55/Credit-Card-Fraud-Detection/main/Modeling/Credit-Card-Fraud-Detection-v3.8.zip
 
 🚀 Running the Training Pipeline
   
