@@ -1,16 +1,15 @@
-<pre>
-📘 Credit Card Fraud Detection
+# 📘 Credit Card Fraud Detection
 
 A complete machine-learning pipeline for detecting fraudulent transactions in highly imbalanced credit-card datasets.
 
 This project walks through end-to-end ML development, including EDA, preprocessing, imbalance handling, model training, hyperparameter tuning, and evaluation using industry-recommended metrics for imbalanced classification.
 
-📌 Project Overview
+## 📌 Project Overview
 
 Credit-card fraud detection is a binary classification problem where fraudulent transactions represent less than 0.2% of all records.
 This project implements a clean, modular, and scalable ML workflow, including:
 
-✔ What the project covers
+## ✔ What the project covers
 
 Exploratory Data Analysis (EDA)
 
@@ -44,7 +43,7 @@ Saving trained models & metrics
 
 Configurable training via command-line arguments
 
-📂 Project Structure
+## 📂 Project Structure
 Credit-Card-Fraud-Detection/
 │
 ├── Data/
@@ -63,7 +62,7 @@ Credit-Card-Fraud-Detection/
 ├── README.md
 └── Results/                      # model summary & best model outputs
 
-📥 Dataset
+## 📥 Dataset
 
 This project uses the Credit Card Fraud Detection Dataset (2013) containing:
 
@@ -87,7 +86,10 @@ Class = 1 → fraud
 
 The PCA transformation preserves confidentiality while keeping predictive signal.
 
-🛠 Installation
+## Results
+
+  
+## 🛠 Installation
   
 1️⃣ Create a virtual environment
 python -m venv venv
@@ -130,7 +132,7 @@ Argument	Description
 --factor	Sampling factor for SMOTE
 --outliers_features	List of feature names for outlier removal
 --outliers_factor	Controls aggressiveness of outlier deletion
-📊 Evaluation Metrics
+## 📊 Evaluation Metrics
 
 Due to extreme imbalance, accuracy is useless.
 Instead, the project uses metrics designed for rare-event classification:
@@ -145,7 +147,7 @@ Confusion Matrix
 
 Stratified K-Fold CV for stability
 
-🧠 Machine Learning Models
+## 🧠 Machine Learning Models
   
 🔹 Logistic Regression
 
@@ -181,7 +183,7 @@ Supports soft voting
 
 Competitive performance
 
-⚖ Handling Class Imbalance
+## ⚖ Handling Class Imbalance
 
 Supported methods:
 
@@ -195,7 +197,7 @@ Class Weighting inside models
 
 🛑 All sampling occurs inside CV folds to avoid data leakage.
 
-📁 Output Files
+## 📁 Output Files
 
 After training, the pipeline generates:
 
@@ -219,4 +221,4 @@ Deploy a FastAPI realtime inference service
 Add threshold optimization for maximizing recall
 
 Experiment with LightGBM / XGBoost
-<\pre>
+
