@@ -14,32 +14,46 @@ import joblib
 
 def gridsearch(x_train,t_train,model,params,scaler,sampling,factor,grid):
     features = ["Amount","Hour"]
-    if(scaler == 'StandardScaler'):
-        scaler = ColumnTransformer(transformers=[('StandardScaler',StandardScaler(),features)],remainder='passthrough') 
-    elif(scaler == 'MinMaxScaler'):
-        scaler = ColumnTransformer(transformers=[('minmax_scaler',MinMaxScaler(),features)],remainder='passthrough') 
-    elif(scaler == 'RobustScaler'):
-        scaler = ColumnTransformer(transformers=[('robust_scaler',RobustScaler(),features)],remainder='passthrough')
+    # Mapping for scalers
+    scaler_map = {
+        'StandardScaler': StandardScaler(),
+        'MinMaxScaler': MinMaxScaler(),
+        'RobustScaler': RobustScaler()
+    }
+    # Select scaler
+    if scaler in scaler_map:
+        scaler_transformer = ColumnTransformer(
+            transformers=[(scaler, scaler_map[scaler], features)],
+            remainder='passthrough'
+        )
     else:
-        scaler = None
+        scaler_transformer = None
+    
+    # Count classes
     minority_count = sum(t_train == 1)
     majority_count = sum(t_train == 0)
-    if(sampling == 'UnderSample'):
-        sampler = RandomUnderSampler(random_state=42,sampling_strategy={0:int(minority_count*factor)})
-    elif(sampling == 'OverSample'):
-        sampler = SMOTE(random_state=42,sampling_strategy={1:int(majority_count/factor)})
-    elif(sampling == 'Both'):
+    
+    # Select sampler
+    if sampling == 'UnderSample':
+        sampler = RandomUnderSampler(random_state=42, sampling_strategy={0: int(minority_count * factor)})
+    elif sampling == 'OverSample':
+        sampler = SMOTE(random_state=42, sampling_strategy={1: int(majority_count / factor)})
+    elif sampling == 'Both':
         sampler = SMOTEENN(random_state=42)
     else:
         sampler = None
-    if(sampler and scaler):
-        pipe = imbPipeline([('scaler',scaler),('sampler',sampler),('model',model)])
-    elif(scaler):
-        pipe = Pipeline([('scaler',scaler),('model',model)])
-    elif(sampler):
-        pipe = imbPipeline([('sampler',sampler),('model',model)])
-    else:
-        pipe = Pipeline([('model',model)])
+    
+    # Build pipeline
+    steps = []
+    if scaler_transformer:
+        steps.append(('scaler', scaler_transformer))
+    if sampler:
+        steps.append(('sampler', sampler))
+    steps.append(('model', model))
+    
+    # Use imbalanced-learn pipeline if sampler exists, otherwise sklearn pipeline
+    pipe = imbPipeline(steps) if sampler else Pipeline(steps)
+
     if(grid):
         print(f'running grid with scaler {scaler} and sampler {sampler}')
         cv = StratifiedKFold(n_splits=3,random_state=42,shuffle=True)
@@ -127,4 +141,5 @@ if __name__ == '__main__':
         'model' : best_model,
         'threshold' : best_threshold
     }
+
     joblib.dump(model_dictionary, 'model_dictionary.joblib')
