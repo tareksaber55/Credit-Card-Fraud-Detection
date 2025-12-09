@@ -62,8 +62,8 @@ Credit-Card-Fraud-Detection/
 ├── requirements.txt
 ├── README.md
 ├── results/                      # model summary & best model outputs
-│   ├── results.txt               # link to results summary document
-│   └── model_results.xlsx        # models results excel sheet 
+│   ├── results.md                # link to results summary document
+│   └── model_results.xlsx        # modeling results excel sheet 
 └── model_dictionary.joblib       # the best model dictionary{model,scaler,best threshold}
 </pre>
 ## 📥 Dataset
