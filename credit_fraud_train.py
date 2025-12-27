@@ -1,61 +1,58 @@
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier,VotingClassifier
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.neural_network import MLPClassifier
+from sklearn.neighbors import KNeighborsClassifier as KNN
 from imblearn.pipeline import Pipeline as imbPipeline
 from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import MinMaxScaler, StandardScaler , RobustScaler
+from imblearn.under_sampling import RandomUnderSampler
+from imblearn.over_sampling import SMOTE
+from imblearn.combine import SMOTEENN
+from sklearn.compose import ColumnTransformer
 from credit_fraud_utils_data import *
 import argparse
 import joblib
 
 
-def gridsearch(x_train,t_train,model,params,scaler,sampling,factor,grid):
-    features = ["Amount","Hour"]
-    # Mapping for scalers
-    scaler_map = {
-        'StandardScaler': StandardScaler(),
-        'MinMaxScaler': MinMaxScaler(),
-        'RobustScaler': RobustScaler()
-    }
-    # Select scaler
-    if scaler in scaler_map:
+
+def gridsearch(x_train,t_train,params,args):
+    steps = []
+    if args.scaler != 'None':
+        features = ["Amount","Hour"]
+        # Mapping for scalers
+        scaler_map = {
+            'StandardScaler': StandardScaler(),
+            'MinMaxScaler': MinMaxScaler(),
+            'RobustScaler': RobustScaler()
+        }     
         scaler_transformer = ColumnTransformer(
-            transformers=[(scaler, scaler_map[scaler], features)],
+            transformers=[(args.scaler, scaler_map[args.scaler], features)],
             remainder='passthrough'
         )
-    else:
-        scaler_transformer = None
-    
-    # Count classes
-    minority_count = sum(t_train == 1)
-    majority_count = sum(t_train == 0)
-    
-    # Select sampler
-    if sampling == 'UnderSample':
-        sampler = RandomUnderSampler(random_state=42, sampling_strategy={0: int(minority_count * factor)})
-    elif sampling == 'OverSample':
-        sampler = SMOTE(random_state=42, sampling_strategy={1: int(majority_count / factor)})
-    elif sampling == 'Both':
-        sampler = SMOTEENN(random_state=42)
-    else:
-        sampler = None
-    
-    # Build pipeline
-    steps = []
-    if scaler_transformer:
         steps.append(('scaler', scaler_transformer))
-    if sampler:
-        steps.append(('sampler', sampler))
-    steps.append(('model', model))
-    
-    # Use imbalanced-learn pipeline if sampler exists, otherwise sklearn pipeline
-    pipe = imbPipeline(steps) if sampler else Pipeline(steps)
 
-    if(grid):
-        print(f'running grid with scaler {scaler} and sampler {sampler}')
+    
+    if args.sampler != 'None':
+        # Count classes
+        minority_count = sum(t_train == 1)
+        majority_count = sum(t_train == 0)
+
+        # Select sampler
+        if args.sampler == 'UnderSample':
+            sampler = RandomUnderSampler(random_state=42, sampling_strategy={0: int(minority_count * args.factor)})
+        elif args.sampler == 'OverSample':
+            sampler = SMOTE(random_state=42, sampling_strategy={1: int(majority_count / args.factor)})
+        else:
+            sampler = SMOTEENN(random_state=42)
+        steps.append(('sampler', sampler))
+
+    steps.append(('model', model))
+
+    # Use imbalanced-learn pipeline if sampler exists, otherwise sklearn pipeline
+    pipe = imbPipeline(steps) if args.sampler != 'None' else Pipeline(steps)
+
+    if(args.gridsearch):
         cv = StratifiedKFold(n_splits=3,random_state=42,shuffle=True)
         grid = GridSearchCV(
             estimator=pipe,
@@ -63,11 +60,10 @@ def gridsearch(x_train,t_train,model,params,scaler,sampling,factor,grid):
             cv=cv,
             scoring='average_precision',
             n_jobs=-1,
-            verbose=1,
+            verbose=1
         )
         grid.fit(x_train,t_train)
         print(f'best params are {grid.best_params_}')
-        print(f'best f1 score is {grid.best_score_}')
         return grid.best_estimator_
     else:
         pipe.fit(x_train,t_train)
@@ -80,10 +76,10 @@ if __name__ == '__main__':
                         choices=['LogisticRegression','RandomForest','NeuralNetwork','VotingClassifier'],
                         help='model to train')
     parser.add_argument('--scaler',type=str,default='StandardScaler',
-                        choices=['StandardScaler','MinMaxScaler','RobustScaler',None],
+                        choices=['StandardScaler','MinMaxScaler','RobustScaler','None'],
                         help='Scaler to scale data')
-    parser.add_argument('--sampler',type=str,default=None,
-                        choices=['UnderSample','OverSample','Both',None],
+    parser.add_argument('--sampler',type=str,default='None',
+                        choices=['UnderSample','OverSample','Both','None'],
                         help='Sampling Strategy to handle imbalanced')
     parser.add_argument('--factor',type=float,default=2.0,
                         help='Sampling factor (eg. 0.5 = undersample , 1.5 = oversample)')
@@ -100,7 +96,6 @@ if __name__ == '__main__':
     ))
     parser.add_argument('--outliers_factor',type=float,default=1.5,
                         help='when factor increase the number of deleted outliers decrease and vice versa')
-    
     args = parser.parse_args()
     
     # load data
@@ -113,8 +108,8 @@ if __name__ == '__main__':
                   'model__class_weight':['balanced',None]}
     elif(args.model == 'RandomForest'):      
         model = RandomForestClassifier(random_state=42,max_depth=10,n_estimators=45)        
-        params = {'model__n_estimators':[40,45,50,60,70,80],
-                  'model__max_depth':[9,10,11,12],
+        params = {'model__n_estimators':[20,35,40,45,50,60],
+                  'model__max_depth':[5,7,9,10],
                   'model__class_weight':['balanced',None]}
     elif(args.model == 'NeuralNetwork'):
         model = MLPClassifier(random_state=42,hidden_layer_sizes=(16,8))
@@ -130,16 +125,14 @@ if __name__ == '__main__':
             'model__nn__hidden_layer_sizes': [(32,16), (16,8)]
         }
 
+
     # training and validation
-    best_model = gridsearch(x_train,t_train,model,
-                                          params,args.scaler,args.sampler,
-                                          args.factor,args.gridsearch)
-    eval(best_model,x_val,t_val)
+    best_model = gridsearch(x_train,t_train,params,args)
     best_threshold = bestthreshold(best_model,x_val,t_val)
-    report(best_model,x_val,t_val,best_threshold)
+    f1,avg_precision = report(best_model,x_val,t_val,best_threshold)
+    save_results_to_excel(args,params, f1, avg_precision)
     model_dictionary = {
         'model' : best_model,
         'threshold' : best_threshold
     }
-
     joblib.dump(model_dictionary, 'model_dictionary.joblib')
