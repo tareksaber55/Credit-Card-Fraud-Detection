@@ -6,3 +6,4 @@ seaborn
 joblib
 argparse
 imbalanced-learn
+openpyxl
