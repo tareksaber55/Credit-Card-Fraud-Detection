@@ -25,17 +25,7 @@ RandomUnderSampler
 
 Class Weighting
 
-Modeling:
-
-Logistic Regression
-
-Random Forest
-
-MLP Neural Network
-
-Voting Classifier
-
-KNN
+Modeling:Logistic Regression , Random Forest ,MLP Neural Network ,Voting Classifier ,KNN
 
 Hyperparameter tuning with GridSearchCV
 
