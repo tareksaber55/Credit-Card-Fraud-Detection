@@ -15,15 +15,7 @@ Exploratory Data Analysis (EDA)
 
 Data preprocessing: scaling, outlier handling, feature engineering
 
-Imbalance handling techniques:
-
-SMOTE
-
-SMOTEENN
-
-RandomUnderSampler
-
-Class Weighting
+Imbalance handling techniques:SMOTE, SMOTEENN ,RandomUnderSampler,Class Weighting
 
 Modeling:Logistic Regression , Random Forest ,MLP Neural Network ,Voting Classifier ,KNN
 
@@ -66,7 +58,7 @@ This project uses the Credit Card Fraud Detection Dataset (2013) containing:
 
 492 fraudulent transactions (0.17%)
 
-Features:
+**Features:**
 
 Time
 
@@ -74,7 +66,7 @@ Amount
 
 28 PCA-transformed components (V1–V28)
 
-Target:
+**Target:**
 
 Class = 0 → normal
 
@@ -188,7 +180,7 @@ Uses voting of the k nearest-neighbors
 
 ## ⚖ Handling Class Imbalance
 
-Supported methods:
+**Supported methods:**
 
 SMOTE: synthetic oversampling
 
@@ -204,9 +196,7 @@ Class Weighting inside models
 
 After training, the pipeline generates:
 
-Trained model (.pkl)
-
-Scaler (.pkl)
+Trained pipline
 
 Best threshold
 
@@ -215,6 +205,5 @@ Best threshold
 
 Deploy a FastAPI realtime inference service
 
-
-Experiment with LightGBM / XGBoost
+Uses non-linear transformation on data like using autoencoder 
 
