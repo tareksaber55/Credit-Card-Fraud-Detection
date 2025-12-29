@@ -3,6 +3,7 @@ from sklearn.ensemble import RandomForestClassifier,VotingClassifier
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier as KNN
+from sklearn.decomposition import PCA
 from imblearn.pipeline import Pipeline as imbPipeline
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler, StandardScaler , RobustScaler
@@ -12,7 +13,6 @@ from imblearn.combine import SMOTEENN
 from sklearn.compose import ColumnTransformer
 from credit_fraud_utils_data import *
 import argparse
-import joblib
 
 
 
@@ -32,6 +32,7 @@ def gridsearch(x_train,t_train,params,args):
         )
         steps.append(('scaler', scaler_transformer))
 
+    
     
     if args.sampler != 'None':
         # Count classes
@@ -73,7 +74,7 @@ if __name__ == '__main__':
     # Arg Parser
     parser = argparse.ArgumentParser(description='Traning and Validation Model')
     parser.add_argument('--model',type=str,default='RandomForest',
-                        choices=['LogisticRegression','RandomForest','NeuralNetwork','VotingClassifier'],
+                        choices=['LogisticRegression','RandomForest','NeuralNetwork','VotingClassifier','KNN'],
                         help='model to train')
     parser.add_argument('--scaler',type=str,default='StandardScaler',
                         choices=['StandardScaler','MinMaxScaler','RobustScaler','None'],
@@ -114,6 +115,9 @@ if __name__ == '__main__':
     elif(args.model == 'NeuralNetwork'):
         model = MLPClassifier(random_state=42,hidden_layer_sizes=(16,8))
         params = {'model__hidden_layer_sizes':[(64,32,16,8),(32,16,8),(16,8)]}
+    elif(args.model == 'KNN'):
+        model = KNN(n_neighbors=3)
+        params = {'model__n_neighbors':[3,5,7]}
     else:
         lr = LogisticRegression(random_state=42,C=1,penalty='l2')
         rf = RandomForestClassifier(random_state=42,max_depth=10,n_estimators=45)
@@ -131,8 +135,4 @@ if __name__ == '__main__':
     best_threshold = bestthreshold(best_model,x_val,t_val)
     f1,avg_precision = report(best_model,x_val,t_val,best_threshold)
     save_results_to_excel(args,params, f1, avg_precision)
-    model_dictionary = {
-        'model' : best_model,
-        'threshold' : best_threshold
-    }
-    joblib.dump(model_dictionary, 'model_dictionary.joblib')
+    save_model(best_model,best_threshold)

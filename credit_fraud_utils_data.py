@@ -1,3 +1,4 @@
+import joblib
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
@@ -155,7 +156,7 @@ def save_results_to_excel(args,params, f1, avg_precision,
 
         # Header
         ws.append([
-            "Model", "Using Grid Search", "Sampling Technique",
+            "Model", "Using Grid Search", "Sampling Technique","Sampling Factor",
             "Parameters", "F1-Score", "Average Precision"
         ])
 
@@ -170,6 +171,7 @@ def save_results_to_excel(args,params, f1, avg_precision,
         args.model,
         "Yes" if args.gridsearch else "No",
         args.sampler,
+        args.factor if args.sampler != 'None' else 0,
         str(params),
         f1,
         avg_precision
@@ -178,3 +180,9 @@ def save_results_to_excel(args,params, f1, avg_precision,
     wb.save(file_path)
     print(f"[INFO] Results saved to {file_path}")
 
+def save_model(model,threshold):
+    model_dictionary = {
+        'model' : model,
+        'threshold' : threshold
+    }
+    joblib.dump(model_dictionary, 'model_dictionary.joblib')

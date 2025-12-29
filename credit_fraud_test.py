@@ -20,7 +20,7 @@ def test():
 
 
     x_test, t_test = load_data(r'data\test.csv')
-    report(model, x_test, t_test, threshold)
+    f1,avgp = report(model, x_test, t_test, threshold)
 
 
 if __name__ == '__main__':
