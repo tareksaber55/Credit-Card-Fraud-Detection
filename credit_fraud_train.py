@@ -65,10 +65,10 @@ def gridsearch(x_train,t_train,params,args):
         )
         grid.fit(x_train,t_train)
         print(f'best params are {grid.best_params_}')
-        return grid.best_estimator_
+        return grid.best_estimator_,grid.best_params_
     else:
         pipe.fit(x_train,t_train)
-        return pipe
+        return pipe , params
 
 if __name__ == '__main__':
     # Arg Parser
@@ -131,7 +131,7 @@ if __name__ == '__main__':
 
 
     # training and validation
-    best_model = gridsearch(x_train,t_train,params,args)
+    best_model,params = gridsearch(x_train,t_train,params,args)
     best_threshold = bestthreshold(best_model,x_val,t_val)
     f1,avg_precision = report(best_model,x_val,t_val,best_threshold)
     save_results_to_excel(args,params, f1, avg_precision)
