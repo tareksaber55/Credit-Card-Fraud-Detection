@@ -35,6 +35,8 @@ MLP Neural Network
 
 Voting Classifier
 
+KNN
+
 Hyperparameter tuning with GridSearchCV
 
 Evaluation using robust, imbalance-friendly metrics (F1, AP)
@@ -189,6 +191,10 @@ Combines LR + RF + NN
 Supports soft voting
 
 Competitive performance
+
+🔹 KNN
+
+Uses voting of the k nearest-neighbors
 
 ## ⚖ Handling Class Imbalance
 
