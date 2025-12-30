@@ -112,7 +112,7 @@ The pipeline is fully configurable.
 <pre>
 ⚙️ Command-Line Arguments
 Argument	Description
---model	LogisticRegression / RandomForest / NeuralNetwork / VotingClassifier
+--model	LogisticRegression / RandomForest / NeuralNetwork / VotingClassifier / KNN
 --scaler	StandardScaler / MinMaxScaler / RobustScaler / None
 --train	Path to training CSV
 --val	Path to validation CSV
