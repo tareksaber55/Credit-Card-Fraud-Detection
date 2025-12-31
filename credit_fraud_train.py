@@ -3,7 +3,6 @@ from sklearn.ensemble import RandomForestClassifier,VotingClassifier
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier as KNN
-from sklearn.decomposition import PCA
 from imblearn.pipeline import Pipeline as imbPipeline
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import MinMaxScaler, StandardScaler , RobustScaler
