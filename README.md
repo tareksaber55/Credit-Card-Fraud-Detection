@@ -201,7 +201,7 @@ Trained pipline
 Best threshold
 
 
-🧩 Future Improvements
+## 🧩 Future Improvements
 
 Deploy a FastAPI realtime inference service
 
