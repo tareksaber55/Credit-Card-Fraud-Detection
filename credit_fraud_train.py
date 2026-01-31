@@ -67,7 +67,7 @@ def gridsearch(x_train,t_train,params,args):
         return grid.best_estimator_,grid.best_params_
     else:
         pipe.fit(x_train,t_train)
-        return pipe , params
+        return pipe , model.get_params()
 
 if __name__ == '__main__':
     # Arg Parser
@@ -135,3 +135,4 @@ if __name__ == '__main__':
     f1,avg_precision = report(best_model,x_val,t_val,best_threshold)
     save_results_to_excel(args,params, f1, avg_precision)
     save_model(best_model,best_threshold)
+
