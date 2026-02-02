@@ -35,7 +35,7 @@ Credit-Card-Fraud-Detection/
 │   ├── newtrain.csv      # training set
 │   ├── val.csv           # validation set
 │   └── test.csv          # testing set
-│
+│   
 ├── EDA/
 │   └── EDA.ipynb         # Exploratory Data Analysis
 │
