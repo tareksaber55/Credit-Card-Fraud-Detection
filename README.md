@@ -114,9 +114,9 @@ The pipeline is fully configurable.
 Argument	Description
 --model	LogisticRegression / RandomForest / NeuralNetwork / VotingClassifier / KNN
 --scaler	StandardScaler / MinMaxScaler / RobustScaler / None
---train	Path to training CSV
---val	Path to validation CSV
---gridsearch	Enable GridSearchCV
+--train_dataset	Path to training CSV
+--val_dataset	Path to small validation CSV used to determine the threshold
+--test_dataset	Path to  Test CSV 
 --sampling	SMOTE / SMOTEENN / UnderSampler / None
 --factor	Sampling factor for SMOTE
 --outliers_features	List of feature names for outlier removal
@@ -164,15 +164,12 @@ MLPClassifier from sklearn
 
 Tunable via GridSearchCV
 
-Good performance, but tuning requires more time
 
 🔹 Voting Classifier
 
 Combines LR + RF + NN
 
 Supports soft voting
-
-Competitive performance
 
 🔹 KNN
 
