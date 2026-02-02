@@ -32,7 +32,7 @@ Configurable training via command-line arguments
 Credit-Card-Fraud-Detection/
 │
 ├── Data/
-│   ├── newtrain.csv      # training set
+│   ├── newtrain.csv      # training set(proccessed)
 │   ├── val.csv           # validation set
 │   └── test.csv          # testing set
 │   
