@@ -80,11 +80,11 @@ if __name__ == '__main__':
                         help='Sampling Strategy to handle imbalanced')
     parser.add_argument('--factor',type=float,default=2.0,
                         help='Sampling factor (eg. 0.5 = undersample , 1.5 = oversample)')
-    parser.add_argument("--train_dataset", type=str, default=r"data_\new_train.csv",
+    parser.add_argument("--train_dataset", type=str, default=r"data\new_train.csv",
                         help="Path to training CSV file.")
-    parser.add_argument("--val_dataset", type=str, default=r"data_\val.csv",
+    parser.add_argument("--val_dataset", type=str, default=r"data\val.csv",
                         help="Path to val CSV file, this small dataset used for selecting best threshold")
-    parser.add_argument("--test_dataset", type=str, default=r"data_\test.csv",
+    parser.add_argument("--test_dataset", type=str, default=r"data\test.csv",
                         help="Path to Test CSV file")
     parser.add_argument('--outliers_features',type=str,nargs='+',
                         help=(
