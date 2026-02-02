@@ -6,26 +6,28 @@ from sklearn.metrics import classification_report, confusion_matrix, precision_r
 from openpyxl import Workbook, load_workbook
 import os
 
-def load_data(train_path,val_path,args=None):
+def load_data(train_path,val_path,test_path,args=None):
     df_train = pd.read_csv(train_path)
     df_val =  pd.read_csv(val_path)
-   
+    df_test = pd.read_csv(test_path)
+
+    # we cannot work with time as it is , we should convert it to Hours of day 
+    for df in [df_train, df_val, df_test]:
+        df['Hour'] = df['Time'] // 3600 % 24
+
     if(args and args.outliers_features):
         df_train = del_outliers(df_train,args.outliers_features,args.outliers_factor)
 
-    # we cannot work with time as it is , we should convert it to Hours of day 
-    df_train['Hour'] = df_train['Time'] // 3600 % 24
-    df_val['Hour'] = df_val['Time'] // 3600 % 24
-
-    X_train = df_train.drop(['Time','Class'],axis=1)
+    x_train = df_train.drop(['Time','Class'],axis=1)
     t_train = df_train['Class']
     
-    X_val = df_val.drop(['Time','Class'],axis=1)
+    x_val = df_val.drop(['Time','Class'],axis=1)
     t_val = df_val['Class']
 
-    
+    x_test = df_test.drop(['Time','Class'],axis=1)
+    t_test = df_test['Class'] 
 
-    return X_train,X_val,t_train,t_val
+    return x_train,t_train,x_val,t_val,x_test,t_test
 
 
 
@@ -136,7 +138,7 @@ def report(model,x,t, threshold=0.2):
 
 
 
-def save_results_to_excel(args,params, f1, avg_precision,
+def save_results_to_excel(args,params,f1, avg_precision,threshold,
                           file_path="results/model_results.xlsx"):
     """
     Save model training results into an Excel file inside /results folder.
@@ -152,27 +154,29 @@ def save_results_to_excel(args,params, f1, avg_precision,
     if not os.path.exists(file_path):
         wb = Workbook()
         ws = wb.active
-        ws.title = "Training Results"
+        ws.title = "Models Results"
 
         # Header
         ws.append([
-            "Model", "Using Grid Search", "Sampling Technique","Sampling Factor",
-            "Parameters", "F1-Score", "Average Precision"
+            "Model","Scaler", "Outlier Features","Sampling Technique","Sampling Factor",
+            "Parameters", "Threshold" ,"F1-Score", "Average Precision"
         ])
 
         wb.save(file_path)
 
     # Load workbook again to append
     wb = load_workbook(file_path)
-    ws = wb["Training Results"]
+    ws = wb["Models Results"]
 
     # Append results row
     ws.append([
         args.model,
-        "Yes" if args.gridsearch else "No",
+        args.scaler,
+        str(args.outliers_features) + f' With factor {args.outliers_factor}' if args.outliers_features else "None",
         args.sampler,
         args.factor if args.sampler != 'None' else 0,
         str(params),
+        threshold,
         f1,
         avg_precision
     ])
